@@ -1,0 +1,9 @@
+services:
+  app:
+    build:
+      context: .
+    volumes:
+      - .:/app
+    command: npm run start:dev
+    ports:
+      - "3000:3000"
