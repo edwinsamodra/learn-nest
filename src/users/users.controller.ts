@@ -6,8 +6,11 @@ import {
   Param,
   Patch,
   Post,
-  Query
+  Query,
+  Req,
+  Res
 } from '@nestjs/common';
+import type { Request, Response } from 'express';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
@@ -44,5 +47,16 @@ export class UsersController {
   @Get('azu/:firstName')
   getDua(@Param('firstName') firstName: string, @Body('middleName') middleName: string, @Query('lastName') lastName: string): string {
     return `mengambil id dari body. param: ${firstName}, body: ${middleName}, query: ${lastName}`;
+  }
+
+  @Get('cookie/:id')
+  setCookie(@Param('id') name: string, @Res() response: Response) {
+    response.cookie('name', name);
+    response.status(200).send('success set cookie');
+  }
+
+  @Get('getCookie')
+  getCookie(@Req() request: Request): string {
+    return request.cookies['name'];
   }
 }
